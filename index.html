@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PSMURO Dashboard</title>
+    <meta
+        name="description"
+        content="Dashboard monitoring asisten PSMURO"
+    >
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- =========================================
+         APP CONTAINER
+    ========================================== -->
+    <div class="app">
+
+        <!-- =====================================
+             SIDEBAR
+        ====================================== -->
+        <aside class="sidebar" id="sidebar">
+
+            <!-- Logo -->
+            <div class="sidebar-logo">
+                <img
+                    src="assets/download.jpg"
+                    alt="PSMURO Logo"
+                    class="logo"
+                >
+
+                <div class="brand-text">
+                    <h2>PSMURO</h2>
+                    <span>Monitoring Dashboard</span>
+                </div>
+            </div>
+
+
+            <!-- Navigation -->
+             <nav class="navigation">
+
+                <div class="nav-section-title">
+                    MENU UTAMA
+                </div>
+
+                <!-- DASHBOARD -->
+                <a href="#" class="nav-item active" data-page="dashboard">
+                    <span class="nav-icon">▦</span>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+
+                <!-- ASISTEN -->
+                <a href="#" class="nav-item" data-page="assistants">
+                    <span class="nav-icon">♙</span>
+                    <span class="nav-text">Asisten</span>
+                </a>
+
+                <!-- KEHADIRAN -->
+                <a href="#" class="nav-item" data-page="attendance">
+                    <span class="nav-icon">✓</span>
+                    <span class="nav-text">Kehadiran</span>
+                </a>
+
+                <!-- AKTIVITAS -->
+                <a href="#" class="nav-item" data-page="activity">
+                    <span class="nav-icon">◉</span>
+                    <span class="nav-text">Aktivitas</span>
+                </a>
+
+                <!-- ESTIMASI HONOR -->
+                <a href="#" class="nav-item" data-page="honor">
+                    <span class="nav-icon">Rp</span>
+                    <span class="nav-text">Estimasi Honor</span>
+                </a>
+
+                <!-- PANDUAN -->
+                <a href="#" class="nav-item" data-page="guide">
+                    <span class="nav-icon">?</span>
+                    <span class="nav-text">Panduan</span>
+                </a>
+
+            </nav>
+            
+            <!-- Sidebar Footer -->
+            <div class="sidebar-footer">
+
+                <div class="read-only-badge">
+                    <span class="status-dot"></span>
+                    <span>Admin-only · Read-only</span>
+                </div>
+
+            </div>
+
+        </aside>
+
+
+        <!-- =====================================
+             MAIN CONTENT
+        ====================================== -->
+        <main class="main-content">
+
+            <!-- =================================
+                 TOP HEADER
+            ================================== -->
+            <header class="top-header">
+
+                <div class="header-left">
+
+                    <!-- Mobile Sidebar Button -->
+                    <button
+                        class="menu-button"
+                        id="menuButton"
+                        aria-label="Buka menu"
+                    >
+                        ☰
+                    </button>
+
+                    <div>
+                        <p class="breadcrumb">PSMURO</p>
+                        <h1 id="pageTitle">Dashboard</h1>
+                    </div>
+
+                </div>
+
+
+                <div class="header-right">
+
+                    <!-- Sync Status -->
+                    <div class="sync-status" id="syncStatus">
+
+                        <span
+                            class="sync-dot"
+                            id="syncDot"
+                        ></span>
+
+                        <div>
+                            <span class="sync-label">Last Sync</span>
+                            <span
+                                class="sync-time"
+                                id="lastSync"
+                            >
+                                Mock Data
+                            </span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- =================================
+                 MOCK DATA NOTICE
+            ================================== -->
+            <div
+                class="mock-banner hidden"
+                id="mockBanner"
+            >
+                <div>
+                    <strong>Mode Demo</strong>
+                    <span>
+                        Website saat ini menggunakan mock data.
+                        Belum terhubung ke Google Sheets.
+                    </span>
+                </div>
+
+                <span class="mock-badge">
+                    MOCK DATA
+                </span>
+            </div>
+
+
+            <!-- =================================
+                 GLOBAL FILTER BAR
+            ================================== -->
+            <section
+                class="global-filters"
+                id="globalFilters"
+            >
+
+                <!-- Period -->
+                <div class="filter-group">
+
+                    <label for="periodFilter">
+                        Periode
+                    </label>
+
+                    <select id="periodFilter">
+                        <option value="all">
+                            Semua Periode
+                        </option>
+                    </select>
+
+                </div>
+
+
+                <!-- Tanggal Harian -->
+                <div class="filter-group">
+
+                    <label for="dateFilter">
+                        Tanggal Harian
+                    </label>
+
+                    <input
+                        type="date"
+                        id="dateFilter"
+                        title="Pilih tanggal untuk memonitor per hari"
+                    >
+
+                </div>
+
+
+                <!-- Lab -->
+                <div class="filter-group">
+
+                    <label for="labFilter">
+                        Laboratorium
+                    </label>
+
+                    <select id="labFilter">
+
+                        <option value="all">
+                            Semua Laboratorium
+                        </option>
+
+                        <option value="LAB_D">
+                            Depok
+                        </option>
+
+                        <option value="LAB_J">
+                            Kalimalang
+                        </option>
+
+                        <option value="LAB_K">
+                            Karawaci
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Job -->
+                <div class="filter-group">
+
+                    <label for="jobFilter">
+                        Job
+                    </label>
+
+                    <select id="jobFilter">
+
+                        <option value="all">
+                            Semua Job
+                        </option>
+
+                        <option value="1">
+                            PSMURO
+                        </option>
+
+                        <option value="2">
+                            DASAR-MENENGAH
+                        </option>
+
+                        <option value="3">
+                            LANJUT
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Assistant -->
+                 <!-- <div class="filter-group">
+
+                    <label for="assistantFilter">
+                        Asisten
+                    </label>
+
+                    <input
+                        type="text"
+                        id="assistantFilter"
+                        list="assistantOptions"
+                        placeholder="Cari nama asisten..."
+                        autocomplete="off"
+                    >
+
+                    <datalist id="assistantOptions"></datalist>
+
+                </div> -->
+                
+                <div class="filter-group">
+
+                    <label for="assistantFilter">
+                        Asisten
+                    </label>
+
+                    <select id="assistantFilter">
+
+                        <option value="all">
+                            Semua Asisten
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Reset -->
+                <button
+                    class="reset-filter"
+                    id="resetFilters"
+                    type="button"
+                >
+                    Reset
+                </button>
+
+            </section>
+
+
+            <!-- =================================
+                 PAGE CONTENT
+            ================================== -->
+            <div
+                class="page-container"
+                id="pageContainer"
+            >
+
+                <!--
+                    app.js akan memasukkan isi halaman
+                    ke dalam container ini.
+
+                    Contoh:
+                    Dashboard
+                    Asisten
+                    Profile
+                    Kehadiran
+                    Aktivitas
+                    Estimasi Honor
+                    Panduan
+                -->
+
+                <div class="loading-state" id="initialLoading">
+
+                    <div class="loading-spinner"></div>
+
+                    <p>
+                        Memuat dashboard...
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================
+                 FOOTER
+            ================================== -->
+            <footer class="main-footer">
+
+                <span>
+                    PSMURO Monitoring Dashboard
+                </span>
+
+                <span>
+                    Read-only · Data mengikuti sumber utama
+                </span>
+
+            </footer>
+
+        </main>
+
+    </div>
+
+
+    <!-- =========================================
+         MOBILE SIDEBAR OVERLAY
+    ========================================== -->
+    <div
+        class="sidebar-overlay"
+        id="sidebarOverlay"
+    ></div>
+
+
+    <!-- =========================================
+         JAVASCRIPT
+    ========================================== -->
+
+    <!-- API / Data Layer -->
+    <script src="api/api.js"></script>
+
+    <!-- Main Application -->
+    <script src="app.js"></script>
+</body>
+</html>

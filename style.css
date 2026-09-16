@@ -1,0 +1,1901 @@
+/* =========================================================
+   PSMURO MONITORING DASHBOARD
+   Global Styles
+========================================================= */
+
+
+/* =========================================================
+   1. VARIABLES
+========================================================= */
+
+:root {
+    --primary: #1f3b4d;
+    --primary-light: #3d6178;
+
+    --background: #f7f8f9;
+    --surface: #ffffff;
+
+    --border: #e2e5e8;
+
+    --text: #1a1f24;
+    --text-secondary: #5c6670;
+    --text-muted: #8a949d;
+
+    --success: #2e7d5b;
+    --warning: #b9862f;
+    --danger: #b33a3a;
+    --info: #3b6e91;
+
+    --sidebar-width: 250px;
+
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+
+    --transition: 0.2s ease;
+}
+
+
+/* =========================================================
+   2. RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Inter", "Segoe UI", sans-serif;
+    background: var(--background);
+    color: var(--text);
+    line-height: 1.5;
+}
+
+button,
+select,
+input {
+    font-family: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+
+/* =========================================================
+   3. APP LAYOUT
+========================================================= */
+
+.app {
+    min-height: 100vh;
+    display: flex;
+}
+
+
+/* =========================================================
+   4. SIDEBAR
+========================================================= */
+
+.sidebar {
+    width: var(--sidebar-width);
+    height: 100vh;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+
+    display: flex;
+    flex-direction: column;
+
+    z-index: 100;
+
+    transition: transform var(--transition);
+}
+
+
+/* Logo */
+
+.sidebar-logo {
+    height: 82px;
+
+    padding: 18px 20px;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.logo {
+    width: 42px;
+    height: 42px;
+
+    object-fit: contain;
+}
+
+.brand-text {
+    min-width: 0;
+}
+
+.brand-text h2 {
+    font-size: 17px;
+    font-weight: 700;
+
+    color: var(--primary);
+
+    letter-spacing: -0.3px;
+}
+
+.brand-text span {
+    display: block;
+
+    margin-top: 2px;
+
+    font-size: 10px;
+    color: var(--text-muted);
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   5. NAVIGATION
+========================================================= */
+
+.navigation {
+    flex: 1;
+
+    padding: 22px 12px;
+
+    overflow-y: auto;
+}
+
+.nav-section-title {
+    padding: 0 12px;
+    margin-bottom: 8px;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    color: var(--text-muted);
+
+    letter-spacing: 0.7px;
+}
+
+.nav-item {
+    width: 100%;
+
+    min-height: 44px;
+
+    margin-bottom: 4px;
+
+    padding: 0 12px;
+
+    border: none;
+    border-radius: var(--radius-md);
+
+    background: transparent;
+
+    color: var(--text-secondary);
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    font-size: 13px;
+    font-weight: 500;
+
+    text-align: left;
+
+    transition:
+        background var(--transition),
+        color var(--transition);
+}
+
+.nav-item:hover {
+    background: #f1f4f6;
+    color: var(--primary);
+}
+
+.nav-item.active {
+    background: #eaf0f3;
+    color: var(--primary);
+
+    font-weight: 600;
+}
+
+.nav-icon {
+    width: 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 15px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   6. SIDEBAR FOOTER
+========================================================= */
+
+.sidebar-footer {
+    padding: 16px 14px;
+
+    border-top: 1px solid var(--border);
+}
+
+.read-only-badge {
+    padding: 9px 10px;
+
+    border-radius: var(--radius-sm);
+
+    background: #f6f8f9;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    color: var(--text-secondary);
+
+    font-size: 10px;
+    font-weight: 500;
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: var(--success);
+
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   7. MAIN CONTENT
+========================================================= */
+
+.main-content {
+    width: calc(100% - var(--sidebar-width));
+
+    margin-left: var(--sidebar-width);
+
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* =========================================================
+   8. TOP HEADER
+========================================================= */
+
+.top-header {
+    min-height: 82px;
+
+    padding: 16px 30px;
+
+    background: var(--surface);
+
+    border-bottom: 1px solid var(--border);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    position: sticky;
+    top: 0;
+
+    z-index: 50;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.breadcrumb {
+    margin-bottom: 1px;
+
+    font-size: 10px;
+    font-weight: 500;
+
+    color: var(--text-muted);
+
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+
+#pageTitle {
+    font-size: 21px;
+    line-height: 1.2;
+
+    font-weight: 700;
+
+    color: var(--text);
+
+    letter-spacing: -0.4px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+.sync-status {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.sync-dot {
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: var(--success);
+}
+
+.sync-label {
+    display: block;
+
+    font-size: 9px;
+
+    color: var(--text-muted);
+
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.sync-time {
+    display: block;
+
+    font-size: 11px;
+    font-weight: 500;
+
+    color: var(--text-secondary);
+}
+
+.menu-button {
+    display: none;
+
+    width: 38px;
+    height: 38px;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+
+    background: var(--surface);
+
+    color: var(--text);
+
+    font-size: 17px;
+}
+
+
+/* =========================================================
+   9. MOCK DATA BANNER
+========================================================= */
+
+.mock-banner {
+    margin: 20px 30px 0;
+
+    padding: 12px 15px;
+
+    border: 1px solid #dfe7eb;
+    border-radius: var(--radius-md);
+
+    background: #f1f5f7;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+
+    color: var(--text-secondary);
+
+    font-size: 11px;
+}
+
+.mock-banner strong {
+    color: var(--primary);
+
+    margin-right: 7px;
+}
+
+.mock-badge {
+    padding: 4px 8px;
+
+    border-radius: 4px;
+
+    background: #e0e8ec;
+
+    color: var(--primary);
+
+    font-size: 9px;
+    font-weight: 700;
+
+    letter-spacing: 0.5px;
+}
+
+
+/* =========================================================
+   10. FILTER BAR
+========================================================= */
+
+.global-filters {
+    margin: 18px 30px 0;
+
+    padding: 15px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    flex-wrap: wrap;
+
+    box-shadow: var(--shadow-sm);
+}
+
+.filter-group {
+    min-width: 140px;
+    flex: 1 1 140px;
+}
+
+.filter-group label {
+    display: block;
+
+    margin-bottom: 5px;
+
+    font-size: 10px;
+    font-weight: 600;
+
+    color: var(--text-secondary);
+}
+
+.filter-group select,
+.filter-group input[type="date"] {
+    width: 100%;
+
+    height: 36px;
+
+    padding: 0 10px;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+
+    background: var(--surface);
+
+    color: var(--text);
+
+    font-size: 11px;
+    font-family: inherit;
+
+    outline: none;
+
+    transition:
+        border-color var(--transition),
+        box-shadow var(--transition);
+}
+
+.filter-group select {
+    padding-right: 28px;
+}
+
+.filter-group select:focus,
+.filter-group input[type="date"]:focus {
+    border-color: var(--primary-light);
+
+    box-shadow: 0 0 0 2px rgba(61, 97, 120, 0.08);
+}
+
+.reset-filter {
+    height: 36px;
+
+    padding: 0 14px;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+
+    background: var(--surface);
+
+    color: var(--text-secondary);
+
+    font-size: 11px;
+    font-weight: 500;
+
+    transition:
+        background var(--transition),
+        color var(--transition);
+}
+
+.reset-filter:hover {
+    background: #f1f4f6;
+    color: var(--primary);
+}
+
+
+/* =========================================================
+   11. PAGE CONTAINER
+========================================================= */
+
+.page-container {
+    flex: 1;
+
+    padding: 24px 30px 30px;
+
+    min-width: 0;
+}
+
+
+/* =========================================================
+   12. GENERIC CARD
+========================================================= */
+
+.card {
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+
+    box-shadow: var(--shadow-sm);
+}
+
+.card-header {
+    padding: 18px 20px;
+
+    border-bottom: 1px solid var(--border);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card-title {
+    font-size: 14px;
+    font-weight: 600;
+
+    color: var(--text);
+}
+
+.card-subtitle {
+    margin-top: 3px;
+
+    font-size: 10px;
+
+    color: var(--text-muted);
+}
+
+.card-body {
+    padding: 20px;
+}
+
+
+/* =========================================================
+   13. KPI CARDS
+========================================================= */
+
+.kpi-grid {
+    display: grid;
+
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+
+    gap: 14px;
+
+    margin-bottom: 20px;
+}
+
+.kpi-card {
+    padding: 18px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+
+    box-shadow: var(--shadow-sm);
+}
+
+.kpi-label {
+    margin-bottom: 9px;
+
+    font-size: 10px;
+    font-weight: 500;
+
+    color: var(--text-secondary);
+}
+
+.kpi-value {
+    font-size: 25px;
+    line-height: 1.1;
+
+    font-weight: 700;
+
+    color: var(--primary);
+
+    letter-spacing: -0.7px;
+}
+
+.kpi-description {
+    margin-top: 7px;
+
+    font-size: 9px;
+
+    color: var(--text-muted);
+}
+
+
+/* =========================================================
+   14. DASHBOARD CHART GRID
+========================================================= */
+
+.chart-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 18px;
+
+    margin-bottom: 20px;
+}
+
+.chart-full {
+    grid-column: 1 / -1;
+}
+
+.chart-container {
+    min-height: 280px;
+
+    padding: 20px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+
+    box-shadow: var(--shadow-sm);
+}
+
+.chart-container h3 {
+    margin-bottom: 4px;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.chart-container p {
+    margin-bottom: 16px;
+
+    font-size: 10px;
+    color: var(--text-muted);
+}
+
+.chart-area {
+    width: 100%;
+    min-height: 210px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--text-muted);
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   15. TABLE
+========================================================= */
+
+.table-wrapper {
+    width: 100%;
+
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: 65vh;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: #ffffff;
+    position: relative;
+}
+
+.data-table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    min-width: 960px;
+
+    table-layout: auto;
+
+    font-size: 11px;
+}
+
+.data-table thead {
+    background: #f6f8f9;
+}
+
+.data-table th {
+    padding: 11px 14px;
+
+    border-bottom: 1px solid var(--border);
+
+    color: var(--text-secondary);
+
+    font-size: 9px;
+    font-weight: 600;
+
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+
+    text-align: left;
+
+    white-space: nowrap;
+
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: #f6f8f9;
+    box-shadow: 0 1px 0 var(--border);
+}
+
+.data-table td {
+    padding: 12px 14px;
+
+    border-bottom: 1px solid #edf0f2;
+
+    color: var(--text);
+
+    white-space: nowrap;
+}
+
+.data-table tbody tr:nth-child(even) {
+    background: #fafbfb;
+}
+
+.data-table tbody tr:hover {
+    background: #f3f6f7;
+}
+
+.data-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* =========================================================
+   STICKY COLUMNS (TANGGAL & NAMA)
+========================================================= */
+
+.data-table.sticky-cols th:first-child,
+.data-table.sticky-cols td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 4;
+    background: #ffffff;
+    min-width: 105px;
+    max-width: 105px;
+    box-shadow: 1px 0 0 #edf0f2;
+}
+
+.data-table.sticky-cols th:nth-child(2),
+.data-table.sticky-cols td:nth-child(2) {
+    position: sticky;
+    left: 105px;
+    z-index: 4;
+    background: #ffffff;
+    box-shadow: 3px 0 6px -2px rgba(0, 0, 0, 0.08);
+}
+
+.data-table.sticky-cols thead th:first-child {
+    z-index: 20;
+    background: #f6f8f9;
+}
+
+.data-table.sticky-cols thead th:nth-child(2) {
+    z-index: 20;
+    background: #f6f8f9;
+}
+
+.data-table.sticky-cols tbody tr:nth-child(even) td:first-child,
+.data-table.sticky-cols tbody tr:nth-child(even) td:nth-child(2) {
+    background: #fafbfb;
+}
+
+.data-table.sticky-cols tbody tr:hover td:first-child,
+.data-table.sticky-cols tbody tr:hover td:nth-child(2) {
+    background: #f3f6f7;
+}
+
+/* =========================================================
+   PAGINATION
+========================================================= */
+
+.pagination-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 12px 16px;
+    background: #fafbfb;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.pagination-info strong {
+    color: var(--text);
+}
+
+.pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.page-size-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.page-size-select {
+    padding: 4px 8px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: #ffffff;
+    font-size: 12px;
+    color: var(--text);
+    cursor: pointer;
+}
+
+.page-nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-page {
+    padding: 5px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: #ffffff;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.btn-page:hover:not(:disabled) {
+    background: #f0f3f5;
+    border-color: #ccd2d6;
+}
+
+.btn-page:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.page-indicator {
+    font-size: 12px;
+    padding: 0 4px;
+}
+
+.page-indicator strong {
+    color: var(--text);
+}
+
+.data-table .number {
+    text-align: right;
+}
+
+
+/* =========================================================
+   16. BADGES
+========================================================= */
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 4px 8px;
+
+    border-radius: 4px;
+
+    font-size: 9px;
+    font-weight: 600;
+}
+
+.badge-success {
+    background: #e7f2ed;
+    color: var(--success);
+}
+
+.badge-warning {
+    background: #f7f0e2;
+    color: var(--warning);
+}
+
+.badge-danger {
+    background: #f7e9e9;
+    color: var(--danger);
+}
+
+.badge-info {
+    background: #e8f0f5;
+    color: var(--info);
+}
+
+.badge-neutral {
+    background: #eef0f2;
+    color: var(--text-secondary);
+}
+
+
+/* =========================================================
+   17. ASSISTANT PROFILE
+========================================================= */
+
+.profile-header {
+    padding: 22px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    margin-bottom: 18px;
+}
+
+.profile-avatar {
+    width: 56px;
+    height: 56px;
+
+    border-radius: 50%;
+
+    background: #e7edf0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--primary);
+
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.profile-info h2 {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.profile-info p {
+    margin-top: 3px;
+
+    font-size: 11px;
+    color: var(--text-secondary);
+}
+
+.profile-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    margin-top: 7px;
+}
+
+
+/* =========================================================
+   18. HEATMAP
+========================================================= */
+
+.heatmap-container {
+    overflow-x: auto;
+
+    padding-bottom: 5px;
+}
+
+.heatmap {
+    display: grid;
+
+    grid-auto-flow: column;
+    grid-template-rows: repeat(7, 12px);
+
+    grid-auto-columns: 12px;
+
+    gap: 3px;
+
+    min-width: max-content;
+}
+
+.heatmap-cell {
+    width: 12px;
+    height: 12px;
+
+    border-radius: 2px;
+
+    background: #edf0f2;
+}
+
+.heatmap-cell.level-1 {
+    background: #d7e3e9;
+}
+
+.heatmap-cell.level-2 {
+    background: #afc6d2;
+}
+
+.heatmap-cell.level-3 {
+    background: #7898aa;
+}
+
+.heatmap-cell.level-4 {
+    background: var(--primary);
+}
+
+.heatmap-legend {
+    margin-top: 10px;
+
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    font-size: 9px;
+    color: var(--text-muted);
+}
+
+
+/* =========================================================
+   19. EMPTY STATE
+========================================================= */
+
+.empty-state {
+    min-height: 220px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    color: var(--text-muted);
+}
+
+.empty-state-icon {
+    width: 44px;
+    height: 44px;
+
+    margin-bottom: 10px;
+
+    border-radius: 50%;
+
+    background: #eef1f3;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--primary);
+
+    font-size: 18px;
+}
+
+.empty-state h3 {
+    margin-bottom: 4px;
+
+    color: var(--text);
+
+    font-size: 13px;
+}
+
+.empty-state p {
+    max-width: 350px;
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   20. LOADING
+========================================================= */
+
+.loading-state {
+    min-height: 300px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    color: var(--text-muted);
+
+    font-size: 11px;
+}
+
+.loading-spinner {
+    width: 28px;
+    height: 28px;
+
+    border: 3px solid #e4e8ea;
+    border-top-color: var(--primary);
+
+    border-radius: 50%;
+
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* =========================================================
+   21. ERROR STATE
+========================================================= */
+
+.error-state {
+    padding: 24px;
+
+    border: 1px solid #edd5d5;
+    border-radius: var(--radius-md);
+
+    background: #fcf4f4;
+
+    color: var(--danger);
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   22. FOOTER
+========================================================= */
+
+.main-footer {
+    padding: 16px 30px;
+
+    border-top: 1px solid var(--border);
+
+    background: var(--surface);
+
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+
+    color: var(--text-muted);
+
+    font-size: 9px;
+}
+
+
+/* =========================================================
+   23. SIDEBAR OVERLAY
+========================================================= */
+
+.sidebar-overlay {
+    display: none;
+
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.25);
+
+    z-index: 90;
+}
+
+
+/* =========================================================
+   24. RESPONSIVE - TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    :root {
+        --sidebar-width: 220px;
+    }
+
+    .top-header,
+    .page-container,
+    .global-filters,
+    .mock-banner {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .top-header {
+        padding-left: 22px;
+        padding-right: 22px;
+    }
+
+    .page-container {
+        padding-left: 22px;
+        padding-right: 22px;
+    }
+
+    .global-filters,
+    .mock-banner {
+        margin-left: 22px;
+        margin-right: 22px;
+    }
+
+    .kpi-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .filter-group {
+        min-width: 140px;
+    }
+
+}
+
+
+/* =========================================================
+   25. RESPONSIVE - MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+
+    :root {
+        --sidebar-width: 250px;
+    }
+
+
+    /* Sidebar */
+
+    .sidebar {
+        transform: translateX(-100%);
+
+        box-shadow: var(--shadow-md);
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .sidebar-overlay.active {
+        display: block;
+    }
+
+
+    /* Main */
+
+    .main-content {
+        width: 100%;
+        margin-left: 0;
+    }
+
+
+    /* Header */
+
+    .top-header {
+        min-height: 70px;
+
+        padding: 14px 16px;
+    }
+
+    .menu-button {
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+    }
+
+    #pageTitle {
+        font-size: 18px;
+    }
+
+    .header-right {
+        display: none;
+    }
+
+
+    /* Banner */
+
+    .mock-banner {
+        margin: 14px 16px 0;
+
+        align-items: flex-start;
+        flex-direction: column;
+
+        gap: 8px;
+    }
+
+
+    /* Filters */
+
+    .global-filters {
+        margin: 14px 16px 0;
+
+        padding: 14px;
+
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+
+        align-items: end;
+    }
+
+    .filter-group {
+        min-width: 0;
+    }
+
+    .reset-filter {
+        width: 100%;
+    }
+
+
+    /* Page */
+
+    .page-container {
+        padding: 18px 16px 24px;
+    }
+
+
+    /* KPI */
+
+    .kpi-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        gap: 10px;
+    }
+
+    .kpi-card {
+        padding: 14px;
+    }
+
+    .kpi-value {
+        font-size: 21px;
+    }
+
+
+    /* Charts */
+
+    .chart-grid {
+        grid-template-columns: 1fr;
+
+        gap: 14px;
+    }
+
+    .chart-full {
+        grid-column: auto;
+    }
+
+
+    /* Footer */
+
+    .main-footer {
+        padding: 14px 16px;
+
+        flex-direction: column;
+
+        gap: 4px;
+    }
+
+}
+
+
+/* =========================================================
+   26. RESPONSIVE - SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .global-filters {
+        grid-template-columns: 1fr;
+    }
+
+    .kpi-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .kpi-label {
+        font-size: 9px;
+    }
+
+    .kpi-value {
+        font-size: 19px;
+    }
+
+    .profile-header {
+        align-items: flex-start;
+    }
+
+}
+/* =========================================================
+   FIX - SUMMARY / RINGKASAN
+   ========================================================= */
+
+.summary-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.summary-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+    min-height: 48px;
+
+    padding: 0 22px;
+
+    border-bottom: 1px solid var(--border);
+    box-sizing: border-box;
+}
+
+.summary-item:last-child {
+    border-bottom: none;
+}
+
+.summary-item span {
+    display: block;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    color: var(--text);
+
+    line-height: 1.5;
+    text-align: left;
+
+    /* Mencegah teks terlihat miring/berantakan */
+    white-space: normal;
+}
+
+.summary-item strong {
+    display: block;
+
+    min-width: 40px;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    color: var(--primary);
+
+    text-align: right;
+}
+
+
+/* =========================================================
+   CARD HEADER
+   ========================================================= */
+
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 20px 22px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.card-header > div {
+    min-width: 0;
+}
+
+.card-header h3 {
+    margin: 0;
+
+    font-size: 19px;
+    font-weight: 700;
+
+    line-height: 1.35;
+
+    color: var(--text);
+}
+
+.card-header p {
+    margin: 5px 0 0;
+
+    font-size: 13px;
+    line-height: 1.5;
+
+    color: var(--secondary);
+}
+
+
+/* =========================================================
+   KPI CARD
+   ========================================================= */
+
+.kpi-card {
+    display: flex;
+    flex-direction: column;
+
+    min-height: 100px;
+
+    padding: 18px 20px;
+
+    box-sizing: border-box;
+}
+
+.kpi-label {
+    margin-bottom: 8px;
+
+    font-size: 13px;
+    font-weight: 500;
+
+    color: var(--secondary);
+
+    line-height: 1.4;
+}
+
+.kpi-value {
+    font-size: 27px;
+    font-weight: 700;
+
+    line-height: 1.2;
+
+    color: var(--primary);
+
+    white-space: nowrap;
+}
+
+.kpi-description {
+    margin-top: 7px;
+
+    font-size: 12px;
+
+    line-height: 1.4;
+
+    color: var(--muted);
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 20px;
+}
+
+.page-header h2 {
+    margin: 0;
+
+    font-size: 22px;
+    font-weight: 700;
+
+    line-height: 1.3;
+}
+
+.page-header p {
+    margin: 5px 0 0;
+
+    font-size: 13px;
+
+    color: var(--secondary);
+}
+
+
+/* =========================================================
+   SHIFT CELL
+   ========================================================= */
+
+.shift-cell {
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+
+    line-height: 1.4;
+}
+
+.shift-cell span {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.shift-cell small {
+    font-size: 11px;
+    color: var(--muted);
+}
+
+
+/* =========================================================
+   BADGE
+   ========================================================= */
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 24px;
+
+    padding: 4px 9px;
+
+    border-radius: 6px;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    line-height: 1;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   CARD
+   ========================================================= */
+
+.card {
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .card-header {
+        align-items: flex-start;
+        flex-direction: column;
+
+        gap: 10px;
+
+        padding: 16px;
+    }
+
+    .summary-item {
+        padding: 0 16px;
+    }
+
+    .kpi-value {
+        font-size: 23px;
+    }
+
+}
+/* =========================================================
+   PANDUAN
+   ========================================================= */
+
+.guide-content {
+    padding: 22px 24px;
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 14px;
+}
+
+.guide-content p {
+    margin: 0 0 14px 0;
+    color: var(--secondary);
+}
+
+.guide-content p:last-child {
+    margin-bottom: 0;
+}
+
+.guide-content strong {
+    color: var(--text);
+    font-weight: 600;
+}
+
+.guide-content ul {
+    margin: 8px 0 16px 20px;
+    padding-left: 18px;
+}
+
+.guide-content li {
+    margin-bottom: 7px;
+    color: var(--secondary);
+}
+
+.guide-content li::marker {
+    color: var(--primary);
+}
+
+
+/* =========================================================
+   GUIDE CARD
+   ========================================================= */
+
+.card + .card {
+    margin-top: 18px;
+}
+
+
+/* =========================================================
+   TABLE DI PANDUAN
+   ========================================================= */
+
+.card .table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.guide-content .data-table {
+    table-layout: fixed;
+}
+
+.card .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;
+    min-width: 960px;
+}
+
+.card .data-table th {
+    background: #f4f6f8;
+    color: var(--secondary);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    text-align: left;
+    padding: 13px 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+.card .data-table td {
+    padding: 13px 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+.card .data-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.card .data-table tbody tr:hover {
+    background: #fafbfc;
+}
+
+
+/* =========================================================
+   CODE BADGE
+   ========================================================= */
+
+.guide-content code,
+.data-table code {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 4px 8px;
+
+    border-radius: 6px;
+
+    background: #eef2f5;
+
+    color: var(--primary);
+
+    font-family: monospace;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.uid-badges {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+}
+
+
+/* =========================================================
+   PANDUAN - HEADER CARD
+   ========================================================= */
+
+.card .card-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border);
+}
+
+.card .card-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 650;
+    color: var(--text);
+}
+
+.card .card-header p {
+    margin: 5px 0 0;
+    font-size: 13px;
+    color: var(--secondary);
+}
+
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.empty-state {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 100px;
+
+    padding: 20px;
+
+    text-align: center;
+
+    color: var(--muted);
+}
+
+.empty-state p {
+    margin: 0;
+}
+
+
+/* =========================================================
+   GUIDE RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .guide-content {
+        padding: 18px;
+        font-size: 13px;
+    }
+
+    .card .card-header {
+        padding: 17px 18px;
+    }
+
+    .card .data-table th,
+    .card .data-table td {
+        padding: 11px 12px;
+    }
+
+}
