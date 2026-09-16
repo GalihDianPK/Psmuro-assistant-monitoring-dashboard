@@ -277,6 +277,20 @@
         }
     }
 
+    // --------------------------------------------------------
+    // UPDATE DATE FILTER BOUNDS
+    // --------------------------------------------------------
+    // Dipanggil saat periode diset ke "all" (tanpa batas bulan
+    // tertentu), supaya input tanggal harian tidak terkunci ke
+    // rentang bulan periode sebelumnya.
+    // --------------------------------------------------------
+    function updateDateFilterBounds() {
+        if (!el.dateFilter) return;
+
+        el.dateFilter.removeAttribute("min");
+        el.dateFilter.removeAttribute("max");
+    }
+
     function setupFilters() {
         // PERIOD
         el.periodFilter?.addEventListener(
@@ -495,16 +509,19 @@
     function resetFilters() {
         state.filters = {
             period: "all",
+            date: "",
             lab: "all",
             job: "all",
             assistant: "all"
         };
 
         if (el.periodFilter) el.periodFilter.value = "all";
+        if (el.dateFilter) el.dateFilter.value = "";
         if (el.labFilter) el.labFilter.value = "all";
         if (el.jobFilter) el.jobFilter.value = "all";
         if (el.assistantFilter) el.assistantFilter.value = "all";
 
+        updateDateFilterBounds();
         resetPagination();
         updateAssistantDropdown();
         renderCurrentPage();
@@ -554,6 +571,13 @@
         if (filters.period !== "all") {
             records = records.filter(record => {
                 return String(record.date || "").startsWith(filters.period);
+            });
+        }
+
+        // DATE (HARIAN)
+        if (filters.date) {
+            records = records.filter(record => {
+                return String(record.date || "").startsWith(filters.date);
             });
         }
 
