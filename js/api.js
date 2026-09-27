@@ -23,9 +23,24 @@ window.PSMURO_API = (() => {
         // false = mock-data.js
         USE_REAL_API: true,
 
-        // URL Web App Apps Script READ-ONLY
-        REAL_API_URL:
-            "https://script.google.com/macros/s/AKfycbykqguThxeeHnanmT31RHIzDnDLfVVpvAev_POQpA5dj9LViBvE4TzqHfrzGLywVC6aOw/exec",
+        // Endpoint URLs untuk masing-masing GSheet
+        SOURCES: [
+            {
+                name: "PSMURO",
+                jobCode: "1",
+                url: "https://script.google.com/macros/s/AKfycbykqguThxeeHnanmT31RHIzDnDLfVVpvAev_POQpA5dj9LViBvE4TzqHfrzGLywVC6aOw/exec"
+            },
+            {
+                name: "DASAR-MENENGAH",
+                jobCode: "2",
+                url: "https://script.google.com/macros/s/AKfycbzs8xO-lcRgsV0rV6T2l1hiWC5QKB8lmEIyf6pLCv7j6wnpX1ySyMpvedH6TvR1-iMo/exec"
+            },
+            {
+                name: "LANJUT",
+                jobCode: "3",
+                url: "https://script.google.com/macros/s/AKfycbwMHQnjnr-sW17LHHmUyUL2p0OKq2gbZltFOH2_vRPX1r6CCojdOyhpUZ0KvkdVfJq3/exec"
+            }
+        ],
 
         // Cache sederhana
         CACHE_DURATION: 60 * 1000
@@ -105,7 +120,7 @@ window.PSMURO_API = (() => {
     // NORMALIZE ATTENDANCE
     // =========================================================
 
-    function normalizeAttendanceRow(row, labName) {
+    function normalizeAttendanceRow(row, labName, defaultJob = "1") {
 
         if (!row) return null;
 
@@ -136,7 +151,7 @@ window.PSMURO_API = (() => {
 
             domicile: String(row["Domisili"] ?? "").trim(),
 
-            job: rawJob || "1",
+            job: rawJob || defaultJob,
 
             shift1: row["Shift 1"] ?? 0,
             mutu1: toNumber(row["Mutu 1"]),
@@ -439,10 +454,10 @@ window.PSMURO_API = (() => {
     // FETCH ONE SHEET
     // =========================================================
 
-    async function fetchSheet(sheetName) {
+    async function fetchSheet(apiUrl, sheetName) {
 
         const url =
-            CONFIG.REAL_API_URL +
+            apiUrl +
             "?sheet=" +
             encodeURIComponent(sheetName);
 
@@ -484,69 +499,62 @@ window.PSMURO_API = (() => {
 
         try {
 
-            const [
-                depok,
-                kalimalang,
-                karawaci,
-                dataUID
-            ] = await Promise.all([
-
-                fetchSheet("Depok"),
-
-                fetchSheet("Kalimalang"),
-
-                fetchSheet("Karawaci"),
-
-                fetchSheet("Data UID")
-            ]);
-
-
-            // -----------------------------------------------------
-            // Attendance
-            // -----------------------------------------------------
-
             const attendance = [];
+            const allDataUID = [];
 
+            // Ambil data dari semua sumber (PSMURO, DASAR-MENENGAH, LANJUT) secara paralel
+            const fetchPromises = CONFIG.SOURCES.map(async (source) => {
+                const [depok, kalimalang, karawaci, dataUID] = await Promise.all([
+                    fetchSheet(source.url, "Depok").catch(err => {
+                        console.warn(`[${source.name}] Gagal fetch Depok:`, err);
+                        return [];
+                    }),
+                    fetchSheet(source.url, "Kalimalang").catch(err => {
+                        console.warn(`[${source.name}] Gagal fetch Kalimalang:`, err);
+                        return [];
+                    }),
+                    fetchSheet(source.url, "Karawaci").catch(err => {
+                        console.warn(`[${source.name}] Gagal fetch Karawaci:`, err);
+                        return [];
+                    }),
+                    fetchSheet(source.url, "Data UID").catch(err => {
+                        console.warn(`[${source.name}] Gagal fetch Data UID:`, err);
+                        return [];
+                    })
+                ]);
 
-            depok.forEach(row => {
+                // Normalisasi attendance per lokasi
+                depok.forEach(row => {
+                    const record = normalizeAttendanceRow(row, "Depok", source.jobCode);
+                    if (record) attendance.push(record);
+                });
 
-                const record =
-                    normalizeAttendanceRow(row, "Depok");
+                kalimalang.forEach(row => {
+                    const record = normalizeAttendanceRow(row, "Kalimalang", source.jobCode);
+                    if (record) attendance.push(record);
+                });
 
-                if (record) {
-                    attendance.push(record);
-                }
+                karawaci.forEach(row => {
+                    const record = normalizeAttendanceRow(row, "Karawaci", source.jobCode);
+                    if (record) attendance.push(record);
+                });
+
+                // Tag job code pada data UID jika belum ada
+                dataUID.forEach(row => {
+                    allDataUID.push({
+                        ...row,
+                        Job: row.Job || source.jobCode
+                    });
+                });
             });
 
-
-            kalimalang.forEach(row => {
-
-                const record =
-                    normalizeAttendanceRow(row, "Kalimalang");
-
-                if (record) {
-                    attendance.push(record);
-                }
-            });
-
-
-            karawaci.forEach(row => {
-
-                const record =
-                    normalizeAttendanceRow(row, "Karawaci");
-
-                if (record) {
-                    attendance.push(record);
-                }
-            });
-
+            await Promise.all(fetchPromises);
 
             // -----------------------------------------------------
-            // Assistants (Derived from Data UID)
+            // Assistants (Derived from Data UID & Attendance)
             // -----------------------------------------------------
 
-            const assistants =
-                buildAssistants(dataUID, attendance);
+            const assistants = buildAssistants(allDataUID, attendance);
 
 
             // -----------------------------------------------------
